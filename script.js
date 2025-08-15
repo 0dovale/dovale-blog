@@ -22,10 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
 // POSTS DEMO
 // ==========================
 const samplePosts = [
-  { id:1, title:"NOVO MOD MENU PRA SA-MP MOBILE!!!🎉🎉", image:"imagens/modmenusampmobile.jpg", excerpt:'<a href="https://youtu.be/gwk73ZJLffU?si=u-xfDenIXCgWm6Ch" target="_blank" class="text-blue-400 underline">BAIXAR MOD MENU</a>', date:"2 horas atrás", views:"1.2K" },
-  { id:2, title:"O mais NOVO EXECUTOR de ROBL0X pra PC! 🎉🎉", image:"imagens/xenoexecutorroblox.jpg", excerpt:'<a href="https://xeno-executor.org/" target="_blank" class="text-blue-400 underline">BAIXAR XENO EXECUTOR</a>', date:"1 dia atrás", views:"3.4K" },
-  { id:3, title:"Executor Script de Roblox 2024 (✅PC) (❌Android)", image:"imagens/jjsploitexecutorroblox.jpg", excerpt:'<a href="https://wearedevs.net/d/JJSploit" target="_blank" class="text-blue-400 underline">BAIXAR JJSPLOIT EXECUTOR</a>', date:"3 dias atrás", views:"5.7K" },
-  { id:4, title:"💫 Como resgatar o Discord Nitro Grátis do Opera GX!!! [Expirado]", image:"imagens/discordnitrooperagx.jpg", excerpt:'<a href="https://www.opera.com/gx/discord-nitro" target="_blank" class="text-blue-400 underline">OBTER DISCORD NITRO</a>', date:"1 semana atrás", views:"12.3K" },
+  { id:1, title:"NOVO MOD MENU PRA SA-MP MOBILE!!!🎉🎉", image:"imagens/modmenusampmobile.jpg", excerpt:'<a href="https://youtu.be/gwk73ZJLffU?si=u-xfDenIXCgWm6Ch" target="_blank" class="text-blue-400 underline">BAIXAR MOD MENU</a>' },
+  { id:2, title:"O mais NOVO EXECUTOR de ROBL0X pra PC! 🎉🎉", image:"imagens/xenoexecutorroblox.jpg", excerpt:'<a href="https://xeno-executor.org/" target="_blank" class="text-blue-400 underline">BAIXAR XENO EXECUTOR</a>' },
+  { id:3, title:"Executor Script de Roblox 2024 (✅PC) (❌Android)", image:"imagens/jjsploitexecutorroblox.jpg", excerpt:'<a href="https://wearedevs.net/d/JJSploit" target="_blank" class="text-blue-400 underline">BAIXAR JJSPLOIT EXECUTOR</a>' },
+  { id:4, title:"💫 Como resgatar o Discord Nitro Grátis do Opera GX!!! [Expirado]", image:"imagens/discordnitrooperagx.jpg", excerpt:'<a href="https://www.opera.com/gx/discord-nitro" target="_blank" class="text-blue-400 underline">OBTER DISCORD NITRO</a>' },
 ];
 
 const postsContainer = document.getElementById('posts-container');
@@ -87,10 +87,6 @@ function renderPosts(page = 1) {
       <div class="p-6">
         <h3 class="text-xl font-bold mb-2">${post.title}</h3>
         <p class="mb-4">${post.excerpt}</p>
-        <div class="flex justify-between items-center text-sm">
-          <span><i class="fas fa-eye mr-1"></i> ${post.views}</span>
-          <span><i class="fas fa-calendar-alt mr-1"></i> ${post.date}</span>
-        </div>
       </div>`;
     postsContainer.appendChild(e);
   });
