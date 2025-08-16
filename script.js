@@ -275,3 +275,85 @@ document.addEventListener("DOMContentLoaded", () => {
   loadYouTubeInfo();
   setInterval(loadYouTubeInfo, AUTO_REFRESH_MIN * 60 * 1000);
 });
+
+// Animação aleatória extra para nuvem/avatar
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".floating-container img").forEach(el => {
+    el.style.animationDuration = (5 + Math.random() * 3) + "s";
+  });
+});
+
+// ===== Adiciona borda RGB =====
+document.addEventListener("DOMContentLoaded", () => {
+  const rgbBorder = document.createElement("div");
+  rgbBorder.className = "rgb-border";
+  document.body.appendChild(rgbBorder);
+});
+
+// ===== SOMBRAS RGB =====
+document.querySelectorAll(".glass-card, .post-card, img, button")
+  .forEach(el => el.classList.add("rgb-glow"));
+
+// ===== AUDIO VISUALIZER =====
+const canvas = document.getElementById("audio-visualizer");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = 150;
+
+let audioCtx, analyser, source, dataArray;
+
+async function initAudio() {
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioCtx.createAnalyser();
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    source = audioCtx.createMediaStreamSource(stream);
+    source.connect(analyser);
+    analyser.fftSize = 256;
+    dataArray = new Uint8Array(analyser.frequencyBinCount);
+    drawVisualizer();
+  } catch (e) {
+    console.warn("Microfone bloqueado:", e);
+  }
+}
+function drawVisualizer() {
+  requestAnimationFrame(drawVisualizer);
+  analyser.getByteFrequencyData(dataArray);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const barWidth = (canvas.width / dataArray.length) * 2.5;
+  let x = 0;
+  for (let i = 0; i < dataArray.length; i++) {
+    const barHeight = dataArray[i];
+    const gradient = ctx.createLinearGradient(0,0,0,canvas.height);
+    gradient.addColorStop(0,"#a855f7");
+    gradient.addColorStop(0.5,"#ec4899");
+    gradient.addColorStop(1,"#3b82f6");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(x, canvas.height - barHeight/2, barWidth, barHeight/2);
+    x += barWidth + 1;
+  }
+}
+initAudio();
+
+// ===== SCROLL REVEAL =====
+const reveals = document.querySelectorAll(".scroll-reveal");
+function revealOnScroll() {
+  reveals.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      el.classList.add("visible");
+    }
+  });
+}
+window.addEventListener("scroll", revealOnScroll);
+window.addEventListener("load", revealOnScroll);
+
+// ===== BORDA RGB REATIVA AO SCROLL =====
+let borderIntensity = 6;
+window.addEventListener("scroll", () => {
+  const speed = Math.abs(window.scrollY - (window.prevScrollY || 0));
+  borderIntensity = Math.min(20, 6 + speed / 15);
+  document.querySelector(".rgb-border::before"); // não pega direto
+  document.querySelector(".rgb-border").style.setProperty("--border-size", borderIntensity+"px");
+  window.prevScrollY = window.scrollY;
+});

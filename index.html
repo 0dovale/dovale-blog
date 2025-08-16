@@ -11,6 +11,15 @@
     <script src="script.js" defer></script>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-pink-900 text-white relative">
+
+    <!-- Avatar + Nuvem + Aviso -->
+    <div class="floating-container">
+        <img src="imagens/AvatarCanal1.png" alt="Avatar" class="avatar-float">
+        <img src="imagens/Nuvem.png" alt="Nuvem" class="cloud-float">
+        <img src="imagens/Nuvem.png" alt="Nuvem" class="cloud-float2">
+        <h1 class="h1aviso"> Ative o microfone para ver o visualizador de áudio! </h1>
+    </div>
+
     <!-- Glitter particles background -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <!-- Big glitter particles -->
@@ -112,13 +121,15 @@
                 <p class="text-xl md:text-2xl mb-8 opacity-90">Fique por dentro de todas as atualizações, novidades e próximos vídeos do canal!</p>
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
 
-                    <button class="bg-gradient-to-r from-pink-500 to-purple-600 px-6 py-3 rounded-full hover:opacity-90 transition flex items-center justify-center space-x-2">
+                    <button onclick="window.open('https://www.youtube.com/@dovalexyz','_blank')"
+                        class="bg-gradient-to-r from-pink-500 to-purple-600 px-6 py-3 rounded-full hover:opacity-90 transition flex items-center justify-center space-x-2">
                         <i class="fab fa-youtube"></i>
                         <span>Inscreva-se</span>
-                        <a href="https://www.youtube.com/@dovalexyz" target="_blank" rel="noopener noreferrer" class="absolute inset-0"></a>
                     </button>
 
-                    <button id="btn-last-video" class="glass-card px-6 py-3 rounded-full hover:bg-white/20 transition flex items-center justify-center space-x-2">
+
+                    <button onclick="window.open('https://www.youtube.com/@dovalexyz','_blank')"
+                        class="glass-card px-6 py-3 rounded-full hover:bg-white/20 transition flex items-center justify-center space-x-2">
                         <i class="fas fa-video"></i>
                         <span>Último Vídeo</span>
                     </button>
@@ -220,5 +231,9 @@
             </div>
         </div>
     </footer>
+
+    <!-- Canvas para efeitos de áudio reativo -->
+    <canvas id="audio-visualizer"></canvas>
+
 </body>
 </html>

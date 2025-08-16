@@ -83,7 +83,7 @@
   overflow: hidden;
   color: #fff;
   text-decoration: none;
-  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+  transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.12);
 }
@@ -96,3 +96,187 @@
 #yt-system .yt-video-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .45s ease; }
 #yt-system .yt-video-card:hover img { transform: scale(1.06); }
 #yt-system .yt-video-card .meta { padding: 10px 12px; font-size: .95rem; }
+
+/* ===== AVATAR E NUVEM ===== */
+.floating-container {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  width: 220px;
+  height: 220px;
+  pointer-events: none;
+  z-index: 40; /* acima do fundo, mas abaixo do menu */
+}
+
+.floating-container img {
+  position: absolute;
+  max-width: 100%;
+  height: auto;
+  animation: levitate 6s ease-in-out infinite;
+}
+
+.avatar-float {
+  z-index: 1;
+  width: 200px;
+  left: 100px;
+  bottom: 10;
+  animation-delay: 2s;
+}
+
+.cloud-float {
+  z-index: 2;
+  width: 500%;
+  height: auto;
+  left: 45px;
+  bottom: -100px;
+  animation-delay: 2s;
+}
+
+.cloud-float2 {
+  z-index: 2;
+  width: 500%;
+  height: auto;
+  left: 95px;
+  bottom: -100px;
+  animation-delay: 2s;
+}
+
+/* Animação de levitação */
+@keyframes levitate {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* ===== BORDA RGB ANIMADA ===== */
+.rgb-border {
+  position: fixed;
+  inset: 0; /* cobre toda a tela */
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.rgb-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 6px; /* grossura da borda */
+  border-radius: 0;
+  background: linear-gradient(270deg, red, orange, yellow, lime, cyan, blue, violet, red);
+  background-size: 400% 400%;
+  -webkit-mask: 
+    linear-gradient(#000 0 0) content-box, 
+    linear-gradient(#000 0 0);
+  mask: 
+    linear-gradient(#000 0 0) content-box, 
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: moveRGB 8s linear infinite;
+}
+
+/* Animação do gradiente */
+@keyframes moveRGB {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== SCROLLBAR GAMER RGB ===== */
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(20, 20, 40, 0.5);
+  border-radius: 12px;
+  box-shadow: inset 0 0 8px rgba(168,85,247,0.3);
+  backdrop-filter: blur(6px);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #a855f7, #ec4899, #3b82f6, #a855f7);
+  background-size: 400% 400%;
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.2);
+  box-shadow: 0 0 12px rgba(236,72,153,0.6), 0 0 20px rgba(59,130,246,0.6);
+  animation: scrollRGB 6s linear infinite;
+  transition: all 0.3s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #9333ea, #db2777, #2563eb, #9333ea);
+  background-size: 400% 400%;
+  box-shadow: 0 0 18px rgba(236,72,153,0.9), 0 0 28px rgba(59,130,246,0.9);
+  transform: scale(1.1);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #a855f7 #1a1a2e;
+}
+
+/* Animação do gradiente da barra */
+@keyframes scrollRGB {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== SOMBRAS RGB DINÂMICAS ===== */
+.rgb-glow {
+  animation: glowRGB 6s linear infinite;
+}
+@keyframes glowRGB {
+  0%   { box-shadow: 0 0 15px #a855f7; }
+  33%  { box-shadow: 0 0 15px #ec4899; }
+  66%  { box-shadow: 0 0 15px #3b82f6; }
+  100% { box-shadow: 0 0 15px #a855f7; }
+}
+
+/* ===== AUDIO VISUALIZER ===== */
+#audio-visualizer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ===== ANIMAÇÕES SCROLL ===== */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.h1aviso {
+  position: fixed;
+  bottom: 10px; /* posição na parte inferior */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(1rem, 2.5vw, 1.5rem); /* adapta conforme a tela */
+  color: #ff1493;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  padding: 5px 10px;
+  text-align: center;
+  max-width: 90%; /* evita que o texto ultrapasse a tela no mobile */
+  box-sizing: border-box;
+}
+
+/* Ajustes extras para telas pequenas */
+@media (max-width: 480px) {
+  .h1aviso {
+    bottom: 5px;
+    font-size: clamp(0.9rem, 4vw, 1.2rem);
+    padding: 4px 8px;
+  }
+}
