@@ -22,10 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
 // POSTS DEMO
 // ==========================
 const samplePosts = [
-  { id:1, title:"NOVO MOD MENU PRA SA-MP MOBILE!!!🎉🎉", image:"imagens/modmenusampmobile.jpg", excerpt:'<a href="https://youtu.be/gwk73ZJLffU?si=u-xfDenIXCgWm6Ch" target="_blank" class="text-blue-400 underline">BAIXAR MOD MENU</a>' },
-  { id:2, title:"O mais NOVO EXECUTOR de ROBL0X pra PC! 🎉🎉", image:"imagens/xenoexecutorroblox.jpg", excerpt:'<a href="https://xeno-executor.org/" target="_blank" class="text-blue-400 underline">BAIXAR XENO EXECUTOR</a>' },
-  { id:3, title:"Executor Script de Roblox 2024 (✅PC) (❌Android)", image:"imagens/jjsploitexecutorroblox.jpg", excerpt:'<a href="https://wearedevs.net/d/JJSploit" target="_blank" class="text-blue-400 underline">BAIXAR JJSPLOIT EXECUTOR</a>' },
-  { id:4, title:"💫 Como resgatar o Discord Nitro Grátis do Opera GX!!! [Expirado]", image:"imagens/discordnitrooperagx.jpg", excerpt:'<a href="https://www.opera.com/gx/discord-nitro" target="_blank" class="text-blue-400 underline">OBTER DISCORD NITRO</a>' },
+  { id:1, title:"NOVO MOD MENU PRA SA-MP MOBILE!!!🎉🎉", image:"imagens/modmenusampmobile.jpg", excerpt:'<a href="https://youtu.be/gwk73ZJLffU?si=u-xfDenIXCgWm6Ch" target="_blank" class="text-red-400 underline">BAIXAR MOD MENU</a>' },
+  { id:2, title:"O mais NOVO EXECUTOR de ROBL0X pra PC! 🎉🎉", image:"imagens/xenoexecutorroblox.jpg", excerpt:'<a href="https://xeno-executor.org/" target="_blank" class="text-red-400 underline">BAIXAR XENO EXECUTOR</a>' },
+  { id:3, title:"Executor Script de Roblox 2024 (✅PC) (❌Android)", image:"imagens/jjsploitexecutorroblox.jpg", excerpt:'<a href="https://wearedevs.net/d/JJSploit" target="_blank" class="text-red-400 underline">BAIXAR JJSPLOIT EXECUTOR</a>' },
+  { id:4, title:"💫 Como resgatar o Discord Nitro Grátis do Opera GX!!! [Expirado]", image:"imagens/discordnitrooperagx.jpg", excerpt:'<a href="https://www.opera.com/gx/discord-nitro" target="_blank" class="text-red-400 underline">OBTER DISCORD NITRO</a>' },
 ];
 
 const postsContainer = document.getElementById('posts-container');
@@ -146,8 +146,8 @@ if (themeToggle) {
 
     if (document.body.classList.contains('bg-gray-100')) {
       themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-      document.body.classList.remove('bg-gradient-to-br','from-gray-900','via-purple-900','to-pink-900');
-      document.body.classList.add('bg-gradient-to-br','from-gray-100','via-purple-50','to-violet-50');
+      document.body.classList.remove('bg-gradient-to-br','from-gray-900','via-red-900','to-red-800');
+      document.body.classList.add('bg-gradient-to-br','from-gray-100','via-red-50','to-red-100');
 
       document.querySelectorAll('.glass-card').forEach(c => { 
         c.classList.remove('text-white'); 
@@ -160,8 +160,8 @@ if (themeToggle) {
       }
     } else {
       themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-      document.body.classList.remove('bg-gradient-to-br','from-gray-100','via-purple-50','to-violet-50');
-      document.body.classList.add('bg-gradient-to-br','from-gray-900','via-purple-900','to-pink-900');
+      document.body.classList.remove('bg-gradient-to-br','from-gray-100','via-red-50','to-red-100');
+      document.body.classList.add('bg-gradient-to-br','from-gray-900','via-red-900','to-red-800');
 
       document.querySelectorAll('.glass-card').forEach(c => { 
         c.classList.remove('text-gray-900'); 
@@ -291,14 +291,24 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ===== SOMBRAS RGB =====
-document.querySelectorAll(".glass-card, .post-card, img, button")
+document.querySelectorAll(".glass-card, .post-card, button")
+  .forEach(el => el.classList.add("rgb-glow"));
+  
+// Aplica sombra RGB apenas em imagens que NÃO estão no floating-container
+document.querySelectorAll("img:not(.floating-container img)")
   .forEach(el => el.classList.add("rgb-glow"));
 
 // ===== AUDIO VISUALIZER =====
 const canvas = document.getElementById("audio-visualizer");
 const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = 150;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = 150;
+}
+
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 
 let audioCtx, analyser, source, dataArray;
 
@@ -314,25 +324,64 @@ async function initAudio() {
     drawVisualizer();
   } catch (e) {
     console.warn("Microfone bloqueado:", e);
+    // Desenha visualização simulada se o microfone estiver bloqueado
+    simulateVisualizer();
   }
 }
+
 function drawVisualizer() {
   requestAnimationFrame(drawVisualizer);
+  
+  if (!analyser) return;
+  
   analyser.getByteFrequencyData(dataArray);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
   const barWidth = (canvas.width / dataArray.length) * 2.5;
   let x = 0;
+  
   for (let i = 0; i < dataArray.length; i++) {
-    const barHeight = dataArray[i];
-    const gradient = ctx.createLinearGradient(0,0,0,canvas.height);
-    gradient.addColorStop(0,"#a855f7");
-    gradient.addColorStop(0.5,"#ec4899");
-    gradient.addColorStop(1,"#3b82f6");
+    const barHeight = dataArray[i] / 2;
+    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    gradient.addColorStop(0, "#dc2626");
+    gradient.addColorStop(0.5, "#b91c1c");
+    gradient.addColorStop(1, "#991b1b");
     ctx.fillStyle = gradient;
-    ctx.fillRect(x, canvas.height - barHeight/2, barWidth, barHeight/2);
+    ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
     x += barWidth + 1;
   }
 }
+
+function simulateVisualizer() {
+  dataArray = new Uint8Array(64);
+  
+  function update() {
+    requestAnimationFrame(update);
+    
+    // Gera dados aleatórios para simulação
+    for (let i = 0; i < dataArray.length; i++) {
+      dataArray[i] = Math.random() * 100 + 50;
+    }
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const barWidth = (canvas.width / dataArray.length) * 2.5;
+    let x = 0;
+    
+    for (let i = 0; i < dataArray.length; i++) {
+      const barHeight = dataArray[i] / 2;
+      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      gradient.addColorStop(0, "#dc2626");
+      gradient.addColorStop(0.5, "#b91c1c");
+      gradient.addColorStop(1, "#991b1b");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+      x += barWidth + 1;
+    }
+  }
+  
+  update();
+}
+
 initAudio();
 
 // ===== SCROLL REVEAL =====
@@ -348,12 +397,8 @@ function revealOnScroll() {
 window.addEventListener("scroll", revealOnScroll);
 window.addEventListener("load", revealOnScroll);
 
-// ===== BORDA RGB REATIVA AO SCROLL =====
-let borderIntensity = 6;
-window.addEventListener("scroll", () => {
-  const speed = Math.abs(window.scrollY - (window.prevScrollY || 0));
-  borderIntensity = Math.min(20, 6 + speed / 15);
-  document.querySelector(".rgb-border::before"); // não pega direto
-  document.querySelector(".rgb-border").style.setProperty("--border-size", borderIntensity+"px");
-  window.prevScrollY = window.scrollY;
+// ===== BORDA RGB FIXA (sem efeito de scroll) =====
+document.addEventListener("DOMContentLoaded", () => {
+  // Define um tamanho fixo para a borda
+  document.querySelector(".rgb-border").style.setProperty("--border-size", "5px");
 });
